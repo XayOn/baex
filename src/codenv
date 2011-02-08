@@ -1,0 +1,4 @@
+#!/bin/bash
+source /etc/codenv.conf
+[[ ! -e ~/.codenv/screenrc ]] && { mkdir -p ~/.codenv && cp $PREFIX/share/codenv/screenrc ~/.codenv/; } &>/dev/null
+screen -c ~/.codenv/screenrc

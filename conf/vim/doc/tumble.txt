@@ -1,0 +1,72 @@
+Tumble for vim
+==============
+
+This script adds to vim the ability to send text entries to the tumblr.com
+blogging platform. It supports markdown formatting, and is able to edit and 
+delete previous entries.
+
+In order to work, the variables
+	
+	tumblr_email
+	tumblr_password
+	tumblr_tumblelog
+
+must be set. They are evaluated on every command, so you can change them on 
+the fly in case you need to switch to another blog.
+
+If you use a proxy, you must also set
+
+	tumblr_http_proxy
+
+tumble.vim adds three commands to Vim: 
+	
+	:Tumble
+	:TumbleLink
+	:ListTumbles
+
+The syntax for :Tumble is
+	
+	:[range]Tumble [draft|publish]
+
+By default, it posts the entire current buffer to tumblr.com, but a range can
+be supplied if that isn't desired. For example, ":,Tumble" would post the
+current selection.
+
+Unless 'draft' (sans ') is given as an argument, it publishes the post
+immediately. The default behaviour is equivalent to ":Tumble publish". Any
+other argument could make the posting to fail. tumble.vim doesn't have safety
+measures against that currently.
+
+Whenever it can, tumble.vim tries to be smart. If it finds a first level setext
+style markdown title in the first lines of the buffer or range, it detects it
+as a title. If the title is found to be the same as the one from an earlier
+post, it overwrites it, instead of sending a new post.
+
+The syntax for :TumbleLink is
+
+	:[range]TumbleLink
+
+It assumes the [range] is formatted thus:
+
+	line
+	1		URL
+	2		NAME
+	3...	DESCRIPTION
+
+NAME and DESCRIPTION are optional, but NAME should always be on line 2 (so if
+you don't want to give a name to the link, you should keep this line blank).
+
+The syntax for :ListTumbles is
+
+	:ListTumbles draft|published
+
+It prints a list of your published or drafting posts in the current buffer. If you 
+press <enter> over a post line, tumble.vim will try to fetch the post and load it 
+for editing. If you press <delete>, it will delete the post.
+
+The original version was based on Travis Jeffery's tumblr.vim
+(http://www.vim.org/scripts/script.php?script_id=2329), and the current version
+contains some ideas from it.
+
+Felipe Morales
+hel.sheep@gmail.com

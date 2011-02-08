@@ -1,0 +1,55 @@
+*archive.txt*
+
+-----------------------------------------------------------------------------
+Archive                                          *archive*
+
+  Prerequisites                      |archive-prerequisites|
+  Overview                           |archive-overview|
+  Usage                              |archive-usage|
+  Configuration                      |archive-configuration|
+
+-----------------------------------------------------------------------------
+Prerequisites                                    *archive-prerequisites*
+
+To view and browse archive files using this plugin you must:
+
+1. Have vim 7.x or greater
+2. Have java 1.5 or greater installed with java and javac in your system path.
+
+-----------------------------------------------------------------------------
+Overview                                         *archive-overview*
+
+This plugins aims to provide the ability to browse archive files (.zip, .tar,
+.tar.gz, .tar.bz2, etc.).
+
+-----------------------------------------------------------------------------
+Usage                                            *archive-usage*
+
+To utilize this plugin you simply need to view an archive file with vim and
+this plugin will present you with a read only view of the archive's contents.
+By default you will be presented with a tree layout of the archive which you
+can drill down into. Nested archives will be displayed as folders which you
+can navigate into just like a regular folder in the archive.
+
+Should you want a listing view of the archive instead of a tree, you can
+switch to that view using the *:AsList* command. You can then switch back to
+the tree view using the *:AsTree* command. In both views you can get help on
+the available key bindings by hitting '?'.
+
+-----------------------------------------------------------------------------
+Configuration                                    *archive-configuration*
+
+- *g:ArchiveViewerEnabled* (Default: 1) - When set to 0 the archive viewer
+  will be disabled.
+- *g:ArchiveActions* (Default: See Below) - A list of dictionaries which
+  match file names against regular expressions to build a list of actions
+  available when using the 'o' shortcut to open a file from the archive.
+  Default: >
+    let g:ArchiveActions = [
+        \ {'pattern': '.*', 'name': 'Split', 'action': 'split'},
+        \ {'pattern': '.*', 'name': 'Tab', 'action': 'tablast | tabnew'},
+        \ {'pattern': '.*', 'name': 'Edit', 'action': 'edit'},
+      \ ]
+  >
+
+vim:tw=78:ft=help:norl:

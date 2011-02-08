@@ -1,0 +1,40 @@
+# Some preferences
+export DEITY=FSM
+export EDITOR=vim
+export BROWSER="/usr/bin/uzbl-tabbed"
+export MAIL="/var/spool/mail/xayon"
+
+# History control and some other stuff
+export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
+export HISTCONTROL=ignoreboth
+export TERM="xterm-256color"
+export PATH=$PATH:$HOME/.bin/
+export CDPATH=".:~:~/temp/:~/devel"
+
+# This is for debian packaging and debian-live devel
+export DEBEMAIL="xayon@xayon.net"
+export DEBFULLNAME="David Francos Cuartero (XayOn)"
+export LH_INTERACTIVE="enabled"
+
+# Set bash options
+options=( "cdable_vars" "checkwinsize" "histappend" )
+
+# Set functions to execute on load
+load_functions=( "set_opts" "get_dchroot" "use_lesspipe" "export_project_locations" "get_last_status" )
+
+# Load external files DO NOT TOUCH
+[[ -f ~/.codenv/bash/bash_aliases ]] && . ~/.codenv/bash/bash_aliases 
+[[ -f ~/.codenv/bash/bashrc_functions ]] && . ~/.codenv/bash/bashrc_functions
+[[ -f ~/.codenv/bash/bashrc_theme ]] && . ~/.codenv/bash/bashrc_theme || {
+    debchroot='${debian_chroot:+($debian_chroot)}'
+    userhost='\[\033[01;32m\]\u@\h\[\033[00m\]:'
+    workingdir='\[\033[01;34m\]\w\[\033[00m\]\$ '
+}
+
+# Prompt DO NOT TOUCH, use .bashrc_theme to customize it
+# "[][]User@Host:dir[$|#] "
+PS1=${debchroot}${userhost}${workingdir}
+
+# Call external functions, DO NOT TOUCH
+for i in ${load_functions[@]}; do $i; done
+
