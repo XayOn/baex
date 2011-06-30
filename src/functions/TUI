@@ -1,7 +1,7 @@
 #!/bin/bash
 # TUI tools
 . general
-. color display
+. color display_
 
 declare -a menuopts menufuncs; 
 start_menu(){ echo_center "$1" "$2"; menu_vwall $2; }
