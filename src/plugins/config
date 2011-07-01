@@ -1,0 +1,2 @@
+load_plugins=(general.plugin.bash)
+theme="main.theme"
