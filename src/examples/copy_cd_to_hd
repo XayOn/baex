@@ -1,0 +1,4 @@
+#!/bin/bash
+source $(source_jabashit)
+load device_utils
+cdtool save /dev/cdrom saved_image.iso

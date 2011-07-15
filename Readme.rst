@@ -6,8 +6,7 @@ It's, actually, usable, it's just you'll have to figure out how to do it by your
 hint: 
 
 ::
-
-    source general; help;
+    source $(source $(source_jabashit)); help;
 
 It also includes a set of nice bash configurations, wich, for using it, you'll just have to execute (as normal user):
 
@@ -27,7 +26,7 @@ Now my favourite example, a menu creator:
 
 ::
 
-    source PATH_TO_JABASHIT/plugins/general.plugin.bash
+    source $(source_jabashit)
     load screen_display TUI
     mkmenu -t "Menu title" -o "Option Foo bar baz"  -f "echo" -o "Option baz stuff" -f "echo"
 
@@ -35,7 +34,7 @@ Now, we serve a directory:
 
 ::
 
-    source PATH_TO_JABASHIT/plugins/general.plugin.bash
+    source $(source_jabashit)
     load network
     serve_directory
     # And to stop it...
@@ -46,7 +45,7 @@ All right, what about writing a DIRECTORY to a cd?
 
 ::
 
-    source PATH_TO_JABASHIT/plugins/general.plugin.bash
+    source $(source_jabashit)
     load device_utils
     cdtool /dev/cdrom /home/foo/bar
     # And we delete a cdrw
@@ -59,8 +58,7 @@ All right, what about writing a DIRECTORY to a cd?
 One of my favourites, set all output devices connected to the reso xrandr says its its best.
 
 ::
-
-    source PATH_TO_JABASHIT/plugins/general.plugin.bash
+    source $(source_jabashit)
     load screen_display
     set_auto_X11_reso
 
