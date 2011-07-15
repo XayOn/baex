@@ -1,4 +1,6 @@
+#!/bin/bash
 function git_stats {
+document "git_stats" "Return git statistics" "Git LOG OPTIONS" && return
 # awesome work from https://github.com/esc/git-stats
 # including some modifications by Bash-It author and then by me.
 

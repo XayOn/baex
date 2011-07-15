@@ -11,7 +11,7 @@ export TERM="xterm-256color"
 export PATH=$PATH:$HOME/.bin/
 export CDPATH=".:~:~/temp/:~/devel"
 
-# This is for debian packaging and debian-live devel
+# This is for debian packaging and debian-live devel EDIT ME.
 export DEBEMAIL="xayon@xayon.net"
 export DEBFULLNAME="David Francos Cuartero (XayOn)"
 export LH_INTERACTIVE="enabled"
@@ -23,6 +23,7 @@ options=( "cdable_vars" "checkwinsize" "histappend" )
 load_functions=( "set_opts" "get_dchroot" "use_lesspipe" "export_project_locations" "get_last_status" )
 
 # Load external files DO NOT TOUCH
+
 [[ -f ~/.codenv/bash/bash_aliases ]] && . ~/.codenv/bash/bash_aliases 
 [[ -f ~/.codenv/bash/bashrc_functions ]] && . ~/.codenv/bash/bashrc_functions
 [[ -f ~/.codenv/bash/bashrc_theme ]] && . ~/.codenv/bash/bashrc_theme || {
@@ -37,4 +38,3 @@ PS1=${debchroot}${userhost}${workingdir}
 
 # Call external functions, DO NOT TOUCH
 for i in ${load_functions[@]}; do $i; done
-

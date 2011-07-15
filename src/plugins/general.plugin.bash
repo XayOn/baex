@@ -1,16 +1,34 @@
 #!/bin/bash
 # General utils
 
-debug=0
-. config
-. main.theme
+get_source_path(){
+    # Source: http://stackoverflow.com/questions/59895/can-a-bash-script-tell-what-directory-its-stored-in
+    {
+        SCRIPT_PATH="${BASH_SOURCE[0]}";
+        if [ -h "${SCRIPT_PATH}" ]; then while [ -h "${SCRIPT_PATH}" ]; do SCRIPT_PATH=`readlink "${SCRIPT_PATH}"`; done; fi
+        pushd . > /dev/null; cd `dirname ${SCRIPT_PATH}` > /dev/null; SCRIPT_PATH=`pwd`; popd  > /dev/null
+    } &>/dev/null
+    echo $SCRIPT_PATH;
+}
+
+source_path=`get_source_path`;
+debug=0;
+. $source_path/config
+. $source_path/main.theme
 
 document(){ [[ $helpbuilder ]] && { docs[$1]=" $1 $3\n\t$2"; return 0; } || return 1; }
 document_files(){ for i in "$@"; do document_file $i; done; }
-document_file(){ export helpbuilder=1; [[ $1 ]] && a=$1 || a=$0 ; for i in `command grep "document " $a|command grep -v 'document()'|grep -v document_file|command awk '{print $2}'|tr '"' ' '`; do $i; done; export helpbuilder=0; }
+document_file(){
+    export helpbuilder=1;
+    [[ $1 ]] && a=$1 || a=$0
+    for i in `command grep "document " $a|command grep -v 'document()'|grep -v document_file|command awk '{print $2}'|tr '"' ' '`; do 
+        $i;
+    done
+    export helpbuilder=0;
+}
 
 help(){
-    document_files $load_plugins
+    document_files ${!loaded[@]} $source_path/general.plugin.bash
     [[ ! $1 ]] && { command help; for i in "${docs[@]}"; do echo -en "$i"|head -n1; done; } || echo -e ${docs[$1]} || echo "Command not found"
 }
 
@@ -18,6 +36,7 @@ help(){
     document "++" "Increases by one varname." "VAR_TO_INCREASE" && return
     export $1=$(( $1 + 1 )); 
 }
+
 _(){
     document "_" "Calls gettext for translation" "TEXT" && return
     gettext "$@";
@@ -46,7 +65,14 @@ declare -A loaded
     document "." "Reimplementation of . sourcing, loads from an array of files" "ARRAY_OF_FILES_TO_LOAD" && return
     for i in $@; do (( $debug == 1 )) && echo "Loading $i"; load $i; done; 
 }
-load(){ [[ ! ${loaded[$1]} ]] && { source $1 && loaded[$1]=1 || load_failed "$@"; }; }
+
+_load(){ source $1 && loaded[$1]=1 || load_failed "$@"; }
+load(){
+    document "load" "Load a specific file or a jabashit plugin" "file|pluginname" && return
+    for i in "${@}"; do 
+        [[ ! ${loaded[$i]} ]] && { 
+            if [ -f $source_path/$i.plugin.bash ]; then _load $source_path/$i.plugin.bash; else _load $i; fi;
+        }
+    done;
+}
 load_failed(){ (( $debug == 1 )) && { _ "Failed loading: "; echo -e "\t$1"; }>&2; }
-
-

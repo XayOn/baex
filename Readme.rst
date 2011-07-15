@@ -9,20 +9,60 @@ hint:
 
     source general; help;
 
-For confs, copy confs/* into $HOME/.bash_configs/ and source it in your bashrc:
+It also includes a set of nice bash configurations, wich, for using it, you'll just have to execute (as normal user):
 
-File .bashrc:
+::
+
+    make conf
+
+Then source it in your bashrc:
 
 ::
 
     source ~/.bash_configs/bashrc
 
+Don't forget to modify it.
 
-Et voilá.
-
-
-Another example: to create a menu, go to functions/ dir, and try this:
+Now my favourite example, a menu creator:
 
 ::
-    source TUI
-    mkmenu -f "echo" -o "Print a blank line" -t "Dummy menu title"
+
+    source PATH_TO_JABASHIT/plugins/general.plugin.bash
+    load screen_display TUI
+    mkmenu -t "Menu title" -o "Option Foo bar baz"  -f "echo" -o "Option baz stuff" -f "echo"
+
+Now, we serve a directory:
+
+::
+
+    source PATH_TO_JABASHIT/plugins/general.plugin.bash
+    load network
+    serve_directory
+    # And to stop it...
+    stop_serving_directory
+
+
+All right, what about writing a DIRECTORY to a cd?
+
+::
+
+    source PATH_TO_JABASHIT/plugins/general.plugin.bash
+    load device_utils
+    cdtool /dev/cdrom /home/foo/bar
+    # And we delete a cdrw
+    cdtool erase_dev /dev/cdrom 
+    # And what about writing a simple iso image?
+    cdtool write_iso /dev/cdrom image.iso
+    # And to save a copy of the current cd
+    cdtool save /dev/cdrom saved_image.iso
+
+One of my favourites, set all output devices connected to the reso xrandr says its its best.
+
+::
+
+    source PATH_TO_JABASHIT/plugins/general.plugin.bash
+    load screen_display
+    set_auto_X11_reso
+
+
+Hell, and I just mentioned half of them, and I've documented just a few!

@@ -1,3 +1,4 @@
+#!/bin/bash
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     eval "`dircolors -b`"
@@ -9,8 +10,6 @@ if [ -x /usr/bin/dircolors ]; then
     alias fgrep='fgrep --color=yes'
     alias egrep='egrep --color=yes'
 fi
-
-if [ ! -e .mplayer-fifo ]; then mkfifo .mplayer-fifo ; fi
 
 # some more ls aliases
 alias ll='ls -l -v1'

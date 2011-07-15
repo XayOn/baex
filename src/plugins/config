@@ -1,2 +1,2 @@
-load_plugins=(general.plugin.bash)
+#!/bin/bash
 theme="main.theme"
