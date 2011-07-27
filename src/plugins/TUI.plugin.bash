@@ -2,7 +2,7 @@
 # TUI tools
 load color screen_display
 
-declare -a menuopts menufuncs; 
+declare -A menuopts menufuncs; 
 start_menu(){ echo_center "$1" "$2"; menu_vwall $2; }
 menu_failed_response(){ _ "Error, try again"; }
 menu_wall(){ colorize none,${theme['menu_separator_color']} ${theme['menu_separator']}; }
@@ -11,7 +11,13 @@ menu_entry(){ tput sc; menu_wall; colorize none,${theme['menu_number']} "$2)"; e
 menu_get_response(){ read -p "`_ \"Enter option: \"`" response; (( $response > $1 )) && response=-127; }
 mkmenu(){
     document "mkmenu" "Create a menu" "[-t title] [ -o options ] [ -f functions ]" && return 
-    while getopts "o:f:t:" opt; do case $opt in o) menuopts[${#menuopts}]=$OPTARG;; f) menufuncs[${#menufuncs}]=$OPTARG;; t) title=$OPTARG;; esac; done
+    while getopts "o:f:t:" opt; do 
+        case $opt in 
+            o) menuopts[${#menuopts[@]}]=$OPTARG;; 
+            f) menufuncs[${#menufuncs[@]}]=$OPTARG;; 
+            t) title=$OPTARG;; 
+        esac; 
+    done
     status=0; menu_len=$(( $(max_len_in_array "${menuopts[@]}") + 5 ));(( $menu_len < ${#title} )) && menu_len=$((${#title} + 4 ));
     start_menu "$title" $menu_len
     for i in "${menuopts[@]}"; do ++ status; menu_entry "${i[@]}" $status $menu_len; done
