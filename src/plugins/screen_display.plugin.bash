@@ -14,7 +14,7 @@ auto_screensize(){
 screen_c(){  [[ "$AUTO_SCREENSIZE" ]] && echo $COLUMNS || tput cols; }
 screen_l(){  [[ "$AUTO_SCREENSIZE" ]] && echo $LINES || tput lines; }
 screen_goto(){ 
-    document "Put the cursor in a specific screen position" " Column [Row] " && return
+    document "screen_goto" "Put the cursor in a specific screen position" " Column [Row] " && return
     [[ "1" ]] && [[ "$2" ]] &&  echo -n -e "\033[${1};${2}H" || screen_goto_col $1; }
 screen_goto_col(){ tput cuf $1; } 
 print_at(){
