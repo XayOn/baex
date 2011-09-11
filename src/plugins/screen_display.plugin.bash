@@ -5,7 +5,7 @@ X11_best_screen_reso(){ xrandr |awk '/\+$/ {print $1}'; }
 X11_screen_outputs(){ xrandr |awk '/ connected/ {print $1}';  }
 set_auto_X11_reso(){ 
     document "set_auto_X11_reso" "Sets the best (according to xrandr) resolution to all active screen outputs" "" && return 
-    outputs=($(X11_screen_outputs)); a=($(X11_best_screen_reso)); b=0; for i in ${a[@]}; do output=${outputs[$b]}; xrandr --output $output --mode $i; ++ b; done; }
+    outputs=($(X11_screen_outputs)); a=($(X11_best_screen_reso)); b=0; for i in ${a[@]}; do output=${outputs[$b]}; xrandr --output $output --mode $i; addone b; done; }
 
 auto_screensize(){
     document "auto_screensize" "Sets a bash trap to keep COLUMNS and LINES updated" "" && return

@@ -24,7 +24,7 @@ stop_serving_directory(){
 
 get_channel(){
     document "get_channel" "Returns channel for a specific network on a specific interface" "IFACE ESSID" && return
-    awk '/Channel/ { print $2 }' <(iwlist $wifi sc $1) 
+    awk '/Channel/ { print $2 }' <(iwlist $1 sc essid $2) 
 }
 get_ip(){
     document "get_ip" "If ip and gw provided, configures them, otherwise it tries to get one via dhcp" "[IP] [GW]" && return
@@ -32,49 +32,64 @@ get_ip(){
 }
 
 get_encryption(){ 
-    document "get_encryption" "Returns encription for a specific essid" "WIFI ESSID" && return
-    enc=$(awk '/Encrypt/ { print $2 }' <(iwlist $wifi sc $1))
-    [[ $enc =~ (.*)WPA(.*) ]] && { echo wpa; return; }
-    [[ $enc =~ (.*)WEP(.*) ]] && { echo wep; return; }
-    echo opn
+    document "get_encryption" "Returns encription for a specific essid" "WIFI ESSID" && return 
+    a=$(iwlist $1 scanning | awk -F '[ :=]+' '/(ESS|WPA)/{ printf $3" " } /Encr/{ print $4 }'|command grep $2)
+    echo $a > foo 
+    awk '/IEEE/ { print}' <<< $a >> foo 
+    
+    [[ "$(awk '/IEEE/ { print}' <<< $a )" =~ (.*)WPA(.*) ]] && { echo wpa; return; }
+    [[ "$(awk '/IEEE/ { print}' <<< $a )" =~ (.*)IEEE(.*) ]] && { echo wpa; return; }
+    [[ "$(awk '/off/ { print $2 }' <<< $a )" =~ (.*)off(.*)  ]] && { echo "opn"; return; }
+    echo "wep"
 }
+
+
+
+
+set_network(){ export cnetwork=$1; }
 
 wireless_menu(){
     declare -a wireless_nets ndata;
-    wireless_nets=($( awk '/essid/ {print $2}' <(iwlist sc)))
-    for network in ${wireless_nets[@]}; do ndata+="-o $network -f cnetwork=$network"; done
-    mkmenu -t "Network selection" ${ndata[@]};
-    read -p "Enter password (empty for none or previosly entered ones)" pass
-    read -p "Enter ip (empty for autoconf)" ip
-    read -p "Enter gateway (empty for autoconf)" gateway
+    wireless_nets=($(awk '/ESSID:(.*)/ {a=$1; a=sub(/ESSID:/,""); a=sub(/"/, ""); a=sub(/"/, ""); print $a }' <(iwlist sc 2>/dev/null)))
+    for network in ${wireless_nets[@]}; do ndata+=" -o $network -f $network"; done 
+    mkmenu -s cnetwork -t Networks_available $(echo -ne ${ndata[@]});
+    read -p "Enter password (empty for none or previosly entered ones): " pass
+    read -p "Enter ip (empty for autoconf): " ip
+    read -p "Enter gateway (empty for autoconf): " gateway
     configure_net $1 $cnetwork $pass $ip $gateway
 }
 
 configure_net(){ 
-    document "configure_net" "Configure network, autodetecting encription" "INTERFACE NETWORK [ASCII_PASSWORD] [IP] [GATEWAY]" && return
-    configure_$(get_encryption $2 ) ${@}; 
+    document "configure_net" "Configure network, autodetecting encription" "INTERFACE NETWORK [ASCII_PASSWORD] [IP] [GATEWAY]" && return 
+    encription_=$(get_encryption $1 $2)
+    echo "Configuring $1 for network $2 with enc $encription_"
+    configure_$encription_ ${@}; 
 }
 
 configure_wpa(){
     document "configure_wpa" "Configure a wpa connection" "INTERFACE NETWORK [ASCII_PASSWORD] [IP] [GATEWAY]" && return 
+    mkdir -p ~/.jabashit/networks/wpa/ &>/dev/null; 
     wifi=$1; essid=$2; password=$3; ip=$4; gateway=$5;
-    [[ -e ~/.jabashit/networks ]] &&  { pass=$(cat ~/.jabashit/networks/wpa/$essid); }
-    [[ $pass == "" ]] && [[ $password != "" ]] && pass=$password || exit;
-    wpa_passphrase $essid $password > ~/.jabashit/networks/wpa/$essid
-    wpa_supplicant -i$wifi -c~/.jabashit/networks/wpa/$essid -B && get_ip $ip $gateway
+    [[ -e ~/.jabashit/networks/wpa/$essid ]] || {
+        [[ $pass == "" ]] && [[ $password != "" ]] && pass=$password || return;
+        wpa_passphrase $essid $password > ~/.jabashit/networks/wpa/$essid 
+        echo "Created passphrase file in ~/.jabashit/networks/wpa/$essid";
+    }
+
+    wpa_supplicant -i$wifi -c $HOME/.jabashit/networks/wpa/$essid -B && get_ip $wifi $ip $gateway
 }
 
 configure_opn(){
     document "configure_opn" "Configure a opn connection" "INTERFACE NETWORK [ASCII_PASSWORD] [IP] [GATEWAY]" && return 
     wifi=$1; essid=$2; ip=$3; gateway=$4;
-    iwconfig $wifi essid $essid channel $(get_channel $essid); get_ip $wifi $ip $gateway;
+    iwconfig $wifi essid $essid channel $(get_channel $wifi $essid); get_ip $wifi $ip $gateway;
 }
 
 configure_wep(){
     document "configure_wep" "Configure a wep connection" "INTERFACE NETWORK [ASCII_PASSWORD] [IP] [GATEWAY]" && return 
+    mkdir -p ~/.jabashit/networks/wep/ &>/dev/null; 
     wifi=$1; essid=$2; password=$3; ip=$4; gateway=$5;
-    [[ -e ~/.jabashit/networks/wep ]] &&  { pass=$(grep $essid ~/.jabashit/networks/wep); }
-    [[ $pass == "" ]] && { pass=$password; echo $essid $password >> ~/.jabashit/networks/wep; channel=$(get_channel $wifi $essid)
-    iwconfig $wifi essid $essid key s:$pass channel $channel
-    get_ip $wifi $ip $gateway
+    [[ -e ~/.jabashit/networks/wep/$essid ]] &&  { pass=$(cat ~/.jabashit/networks/wep/$essid); }
+    [[ $pass == "" ]] && { pass=$password; echo $password > ~/.jabashit/networks/wep/$essid; }
+    iwconfig $wifi essid $essid key s:$pass channel $(get_channel $wifi $essid); get_ip $wifi $ip $gateway
 }

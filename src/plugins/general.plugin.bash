@@ -29,11 +29,12 @@ document_file(){
 
 help(){
     document_files ${!loaded[@]} $source_path/general.plugin.bash
-    [[ ! $1 ]] && { command help; for i in "${docs[@]}"; do echo -en "$i"|head -n1; done; } || echo -e ${docs[$1]} || echo "Command not found"
+    [[ ! $1 ]] && { command help; for i in "${docs[@]}"; do echo -en "$i"|head -n1; done; } || echo -e ${docs[$1]}
+
 }
 
-++(){
-    document "++" "Increases by one varname." "VAR_TO_INCREASE" && return
+addone(){
+    document "addone" "Increases by one varname." "VAR_TO_INCREASE" && return
     export $1=$(( $1 + 1 )); 
 }
 
@@ -66,13 +67,14 @@ declare -A loaded
     for i in $@; do (( $debug == 1 )) && echo "Loading $i"; load $i; done; 
 }
 
-_load(){ source $1 && loaded[$1]=1 || load_failed "$@"; }
+_load(){ source $1 && loaded[$1]=1 || load_failed "$@";  }
+
 load(){
     document "load" "Load a specific file or a jabashit plugin" "file|pluginname" && return
     for i in "${@}"; do 
         [[ ! ${loaded[$i]} ]] && { 
             if [ -f $source_path/$i.plugin.bash ]; then _load $source_path/$i.plugin.bash; else _load $i; fi;
-        }
+            } 
     done;
 }
-load_failed(){ (( $debug == 1 )) && { _ "Failed loading: "; echo -e "\t$1"; }>&2; }
+load_failed(){  _ "Failed loading: "; echo -e "\t$1"; }
