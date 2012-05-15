@@ -5,7 +5,9 @@ Jabashit is a set of tools and functions designed to improve a terminal user's w
 To view jabashit documentation, simply execute
 
 ::
-    source $(source_jabashit); help;
+    source $(source_jabashit); jabashit_api;
+
+Or, if you dare to see a probably outdated version, have a look at doc/API
 
 It also includes a set of nice bash configurations, wich, for using it, you'll just have to execute (as normal user):
 
