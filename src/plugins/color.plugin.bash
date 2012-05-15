@@ -1,4 +1,5 @@
 #!/bin/bash
+document_description "Colouring functions, easily customizable and themable colouring for your scripts"
 declare -A colors highlights
 get_color(){
     document "get_color" "Return a color, either a colorcode or one of the color list" "colorname" && return

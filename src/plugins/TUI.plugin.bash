@@ -1,6 +1,9 @@
 #!/bin/bash
 # TUI tools
+document_description "Nice menu creation function not depending on ncurses, just pure bash"
 load color screen_display
+
+
 
 declare -A menuopts menufuncs; 
 start_menu(){ echo_center "$1" "$2"; menu_vwall $2; }

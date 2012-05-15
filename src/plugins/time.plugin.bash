@@ -1,4 +1,5 @@
 #!/bin/bash
+document_description "Time manipulation in bash"
 scale=2
 
 minutes(){

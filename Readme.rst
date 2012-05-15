@@ -1,12 +1,11 @@
 About Jabashit
 ------------
-Jabashit is a set of bash tools and functions designed to improve a terminal user's working speed
-Right now, I'm working on it, and adding documentations, so don't be impatient, It'll be usable soon.
-It's, actually, usable, it's just you'll have to figure out how to do it by yourself...
-hint: 
+Jabashit is a set of tools and functions designed to improve a terminal user's working speed.
+
+To view jabashit documentation, simply execute
 
 ::
-    source $(source $(source_jabashit)); help;
+    source $(source_jabashit); help;
 
 It also includes a set of nice bash configurations, wich, for using it, you'll just have to execute (as normal user):
 
@@ -20,7 +19,11 @@ Then source it in your bashrc:
 
     source ~/.bash_configs/bashrc
 
-Don't forget to modify it.
+Don't forget to modify it to fit your needs.
+
+
+Usage examples
+---------------
 
 Now my favourite example, a menu creator:
 

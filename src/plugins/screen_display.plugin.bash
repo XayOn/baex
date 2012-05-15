@@ -1,4 +1,5 @@
 #!/bin/bash
+document_description "Screen tools, allows you to get all the power from your terminal, and from your xserver."
 # Screen Utilities
 X11_screen_reso(){ xrandr | grep "*" |awk '{print $1}'; }
 X11_best_screen_reso(){ xrandr |awk '/\+$/ {print $1}'; }

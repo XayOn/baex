@@ -1,4 +1,6 @@
 #!/bin/bash
+document_description "Git tools, to work with one of the bests cvs out there"
+
 function git_stats {
 document "git_stats" "Return git statistics" "Git LOG OPTIONS" && return
 # awesome work from https://github.com/esc/git-stats

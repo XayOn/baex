@@ -1,4 +1,6 @@
 #!/bin/bash
+document_description "Networking tools, manage your networking interfaces"
+
 isdown(){ 
     document "isdown" "Check if a webpage is down using downforeveryoneorjustme" "URL" && return 
     wget -O -  "http://www.downforeveryoneorjustme.com/$1" 2>/dev/null | grep "not just you";

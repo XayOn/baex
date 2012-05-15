@@ -1,4 +1,7 @@
 #!/bin/bash
+
+document_description "Device tools, handy functions to get all the power from your hardware"
+
 cdtool(){
     document "cdtool" "Manipulate cdrom device" "[save|write_iso|write_dir|erase_dev] [device] [destination]" && return
     [[ $1 == "save"  ]] && { dd if=$2 of=$3 bs=2048 conv=sync,notrunc; }
