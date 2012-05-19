@@ -20,7 +20,7 @@ export LH_INTERACTIVE="enabled"
 if [ `id -u` != '0' ]; then
   export VIRTUALENV_USE_DISTRIBUTE=1
   export WORKON_HOME=$HOME/.virtualenvs
-  source /usr/local/bin/virtualenvwrapper.sh
+[[ -e /usr/local/bin/virtualenvwrapper.sh ]] &&  source /usr/local/bin/virtualenvwrapper.sh
   export PIP_VIRTUALENV_BASE=$WORKON_HOME
   export PIP_RESPECT_VIRTUALENV=true
 fi
@@ -43,9 +43,9 @@ load_functions=( "set_opts" "get_dchroot" "use_lesspipe" "export_project_locatio
 
 # Load external files DO NOT TOUCH
 
-[[ -f ~/.codenv/bash/bash_aliases ]] && . ~/.codenv/bash/bash_aliases 
-[[ -f ~/.codenv/bash/bashrc_functions ]] && . ~/.codenv/bash/bashrc_functions
-[[ -f ~/.codenv/bash/bashrc_theme ]] && . ~/.codenv/bash/bashrc_theme || {
+[[ -f ~/.jabashit/bash_aliases ]] && . ~/.jabashit/bash_aliases 
+[[ -f ~/.jabashit/bashrc_functions ]] && . ~/.jabashit/bashrc_functions
+[[ -f ~/.jabashit/bash/bashrc_theme ]] && . ~/.jabashit/bashrc_theme || {
     debchroot='${debian_chroot:+($debian_chroot)}'
     userhost='\[\033[01;32m\]\u@\h\[\033[00m\]:'
     workingdir='\[\033[01;34m\]\w\[\033[00m\]\$ '
