@@ -46,8 +46,6 @@ get_encryption(){
 }
 
 
-
-
 set_network(){ export cnetwork=$1; }
 
 wireless_menu(){
@@ -70,28 +68,15 @@ configure_net(){
 
 configure_wpa(){
     document "configure_wpa" "Configure a wpa connection" "INTERFACE NETWORK [ASCII_PASSWORD] [IP] [GATEWAY]" && return 
-    mkdir -p ~/.jabashit/networks/wpa/ &>/dev/null; 
-    wifi=$1; essid=$2; password=$3; ip=$4; gateway=$5;
-    [[ -e ~/.jabashit/networks/wpa/$essid ]] || {
-        [[ $pass == "" ]] && [[ $password != "" ]] && pass=$password || return;
-        wpa_passphrase $essid $password > ~/.jabashit/networks/wpa/$essid 
-        echo "Created passphrase file in ~/.jabashit/networks/wpa/$essid";
-    }
-
-    wpa_supplicant -i$wifi -c $HOME/.jabashit/networks/wpa/$essid -B && get_ip $wifi $ip $gateway
+    wpa_passphrase $2 $3 | wpa_supplicant -i$1 -c /dev/stdin -B && get_ip $1 $4 $5
 }
 
 configure_opn(){
     document "configure_opn" "Configure a opn connection" "INTERFACE NETWORK [ASCII_PASSWORD] [IP] [GATEWAY]" && return 
-    wifi=$1; essid=$2; ip=$3; gateway=$4;
-    iwconfig $wifi essid $essid channel $(get_channel $wifi $essid); get_ip $wifi $ip $gateway;
+    iwconfig $1 essid $2 channel $(get_channel $1 $2); get_ip $1 $3 $4;
 }
 
 configure_wep(){
-    document "configure_wep" "Configure a wep connection" "INTERFACE NETWORK [ASCII_PASSWORD] [IP] [GATEWAY]" && return 
-    mkdir -p ~/.jabashit/networks/wep/ &>/dev/null; 
-    wifi=$1; essid=$2; password=$3; ip=$4; gateway=$5;
-    [[ -e ~/.jabashit/networks/wep/$essid ]] &&  { pass=$(cat ~/.jabashit/networks/wep/$essid); }
-    [[ $pass == "" ]] && { pass=$password; echo $password > ~/.jabashit/networks/wep/$essid; }
-    iwconfig $wifi essid $essid key s:$pass channel $(get_channel $wifi $essid); get_ip $wifi $ip $gateway
+    document "configure_wep" "Configure a wep connection" "INTERFACE NETWORK [s:][PASSWORD] [IP] [GATEWAY]" && return 
+    iwconfig $1 essid $2 key $3 channel $(get_channel $1 $2); get_ip $1 $4 $5
 }
