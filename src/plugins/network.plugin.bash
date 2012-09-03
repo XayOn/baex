@@ -35,10 +35,11 @@ get_ip(){
 
 get_encryption(){ 
     document "get_encryption" "Returns encription for a specific essid" "WIFI ESSID" && return 
+    tmp=`mktemp`;
     a=$(iwlist $1 scanning | awk -F '[ :=]+' '/(ESS|WPA)/{ printf $3" " } /Encr/{ print $4 }'|command grep $2)
-    echo $a > foo 
-    awk '/IEEE/ { print}' <<< $a >> foo 
-    
+    echo $a > $tmp 
+    awk '/IEEE/ { print}' <<< $a >> $tmp
+    rm $tmp;
     [[ "$(awk '/IEEE/ { print}' <<< $a )" =~ (.*)WPA(.*) ]] && { echo wpa; return; }
     [[ "$(awk '/IEEE/ { print}' <<< $a )" =~ (.*)IEEE(.*) ]] && { echo wpa; return; }
     [[ "$(awk '/off/ { print $2 }' <<< $a )" =~ (.*)off(.*)  ]] && { echo "opn"; return; }
@@ -49,18 +50,23 @@ get_encryption(){
 set_network(){ export cnetwork=$1; }
 
 wireless_menu(){
-    declare -a wireless_nets ndata;
+    declare -a wireless_nets;
     wireless_nets=($(awk '/ESSID:(.*)/ {a=$1; a=sub(/ESSID:/,""); a=sub(/"/, ""); a=sub(/"/, ""); print $a }' <(iwlist sc 2>/dev/null)))
-    for network in ${wireless_nets[@]}; do ndata+=" -o $network -f $network"; done 
+    for network in ${wireless_nets[@]}; do 
+        [[ ${network} == "\x00" ]] && network="HIDDEN SSID"
+        ndata+=" -o $network -f $network";
+    done 
     mkmenu -s cnetwork -t Networks_available $(echo -ne ${ndata[@]});
-    read -p "Enter password (empty for none or previosly entered ones): " pass
+    read -p "Enter password (empty for no password): " pass
     read -p "Enter ip (empty for autoconf): " ip
     read -p "Enter gateway (empty for autoconf): " gateway
+    echo $1 $cnetwork $pass $ip $gateway
     configure_net $1 $cnetwork $pass $ip $gateway
 }
 
 configure_net(){ 
     document "configure_net" "Configure network, autodetecting encription" "INTERFACE NETWORK [ASCII_PASSWORD] [IP] [GATEWAY]" && return 
+    pkill -9 $1; # Try to kill everything running there! 
     encription_=$(get_encryption $1 $2)
     echo "Configuring $1 for network $2 with enc $encription_"
     configure_$encription_ ${@}; 
