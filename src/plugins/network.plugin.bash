@@ -50,6 +50,9 @@ get_encryption(){
 set_network(){ export cnetwork=$1; }
 
 wireless_menu(){
+	echo "Please wait while looking for available networks..."
+	wireless_nets=("");
+	ndata="";
     declare -a wireless_nets;
     wireless_nets=($(awk '/ESSID:(.*)/ {a=$1; a=sub(/ESSID:/,""); a=sub(/"/, ""); a=sub(/"/, ""); print $a }' <(iwlist sc 2>/dev/null)))
     for network in ${wireless_nets[@]}; do 
