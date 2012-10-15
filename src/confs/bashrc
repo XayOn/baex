@@ -1,54 +1,27 @@
-# Some preferences
-export DEITY=FSM
-export EDITOR=vim
-export BROWSER="/usr/bin/uzbl-tabbed"
-export MAIL="/var/spool/mail/$USER"
-
 # History control and some other stuff
 export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
 export HISTCONTROL=ignoreboth
-export TERM="xterm-256color"
 export PATH=$PATH:$HOME/.bin/
 export CDPATH=".:~:~/temp/:~/devel"
-
-# This is for debian packaging and debian-live devel EDIT ME.
-export DEBEMAIL=""
-export DEBFULLNAME=""
 export LH_INTERACTIVE="enabled"
 
-# This is for python virtualenv and pip autocompletion
-if [ `id -u` != '0' ]; then
-  export VIRTUALENV_USE_DISTRIBUTE=1
-  export WORKON_HOME=$HOME/.virtualenvs
-[[ -e /usr/local/bin/virtualenvwrapper.sh ]] &&  source /usr/local/bin/virtualenvwrapper.sh
-  export PIP_VIRTUALENV_BASE=$WORKON_HOME
-  export PIP_RESPECT_VIRTUALENV=true
-fi
-
-_pip_completion()
-{
-    COMPREPLY=( $( COMP_WORDS="${COMP_WORDS[*]}" \
-                   COMP_CWORD=$COMP_CWORD \
-                   PIP_AUTO_COMPLETE=1 $1 ) )
-}
-
-complete -o default -F _pip_completion pip
-
-
 # Set bash options
-options=( "cdable_vars" "checkwinsize" "histappend" )
+options=( "cdable_vars" "checkwinsize" "histappend" "cdspell" )
 
 # Set functions to execute on load
 load_functions=( "set_opts" "get_dchroot" "use_lesspipe" "export_project_locations" "get_last_status" )
 
 # Load external files DO NOT TOUCH
-
+[[ -f ~/.jabashit/config ]] && . ~/.jabashit/config
 [[ -f ~/.jabashit/bash_aliases ]] && . ~/.jabashit/bash_aliases 
 [[ -f ~/.jabashit/bashrc_functions ]] && . ~/.jabashit/bashrc_functions
-[[ -f ~/.jabashit/bash/bashrc_theme ]] && . ~/.jabashit/bashrc_theme || {
+[[ -f ~/.jabashit/bashrc_theme ]] && . ~/.jabashit/bashrc_theme || {
     debchroot='${debian_chroot:+($debian_chroot)}'
     userhost='\[\033[01;32m\]\u@\h\[\033[00m\]:'
     workingdir='\[\033[01;34m\]\w\[\033[00m\]\$ '
+}
+[[ $jabashit_use_python ]] && { # Some nice and useful stuff for python programming.
+    . ~/.jabashit/bash_python
 }
 
 # Prompt DO NOT TOUCH, use .bashrc_theme to customize it

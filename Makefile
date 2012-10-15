@@ -6,7 +6,7 @@ install:
 
 config:
 	@install -d ~/.jabashit
-	@install src/confs/* ~/.jabashit
+	@cp -r src/confs/* ~/.jabashit/
 	@echo "Now just source ~/.jabashit/bashrc from your bashrc"
 
 doc: install
