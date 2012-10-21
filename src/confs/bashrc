@@ -9,7 +9,7 @@ export LH_INTERACTIVE="enabled"
 options=( "cdable_vars" "checkwinsize" "histappend" "cdspell" )
 
 # Set functions to execute on load
-load_functions=( "set_opts" "get_dchroot" "use_lesspipe" "export_project_locations" "get_last_status" )
+load_functions=( "set_opts" "use_lesspipe")
 
 # Load external files DO NOT TOUCH
 [[ -f ~/.jabashit/config ]] && . ~/.jabashit/config
