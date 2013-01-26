@@ -1,7 +1,7 @@
 # History control and some other stuff
 export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
 export HISTCONTROL=ignoreboth
-export PATH=$PATH:$HOME/.bin/:$HOME/.cw/def:$HOME/.perl5/bin
+export PATH=$HOME/.bin/:$HOME/.cw/def:$HOME/.perl5/bin:$PATH
 export CDPATH=".:~:~/temp/:~/devel"
 export LH_INTERACTIVE="enabled"
 alias ls=ls++
