@@ -5,9 +5,9 @@ install:
 	@install src/plugins/* $(PREFIX)/share/jabashit/
 
 config:
-	@install -d ~/.jabashit
-	@cp -r src/confs/* ~/.jabashit/
-	@echo "Now just source ~/.jabashit/bashrc from your bashrc"
+	@install -d /home/$(USER)/.jabashit
+	@cp -r src/confs/* /home/$(USER)/.jabashit/
+	@echo "Now just source /home/$(USER)/.jabashit/bashrc from your bashrc"
 
 doc: install
 	@.mkdocs
