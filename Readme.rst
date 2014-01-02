@@ -9,34 +9,6 @@ To view yabatool documentation, simply execute
 
     source $(source_yabatool); yabatool_api;
 
-Or, if you dare to see a probably outdated version, have a look at doc/API
-
-It also includes a set of nice bash configurations, wich, for using it, 
-you'll just have to execute (as normal user), but first, you'll have to get 
-bash-powerline, wich has been added to this repo as a submodule.
-Bash powerline is a nice bash prompt by milkbikis, with the style of 
-vim-powerline, written in python.
-
-::
-
-    git submodule init; git submodule update;
-
-::
-
-    make conf
-
-Then source it in your bashrc:
-
-::
-
-    source ~/.yabatool/bashrc
-
-Don't forget to modify it to fit your needs, there is a ~/.yabatool/config 
-file for that purpose.
-Also, this enables by default "bash-powerline", wich is provided as 
-a submodule, as said before.
-
-
 Usage examples
 ---------------
 
