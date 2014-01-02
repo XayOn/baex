@@ -8,10 +8,10 @@ export TERM="xterm-256color"
 most &>/dev/null && PAGER=most # Not the nicest way... but most rocks.
 
 # Enable powerline
-export jabashit_use_powerline=true
+export yabatool_use_powerline=true
 
 # Enable python stuff
-export jabashit_use_python=true
+export yabatool_use_python=true
 
 # This is for debian packaging and debian-live devel
 export DEBEMAIL=""

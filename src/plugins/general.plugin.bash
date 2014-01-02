@@ -33,16 +33,16 @@ help(){
     [[ ! $1 ]] && { command help; echo "---- Jabashit help ----"; for i in "${docs[@]}"; do echo -en "$i"|head -n1; done; } || echo -e ${docs[$1]}
 }
 
-jabashit_plugins(){
-    document "jabashit_plugins" "Shows a list of available jabashit plugins" ""
+yabatool_plugins(){
+    document "yabatool_plugins" "Shows a list of available yabatool plugins" ""
     cd $source_path; plugins_=(*); cd - &>/dev/null;
     declare -a plugins=( ${plugins_[@]/__*/} )
     echo ${plugins[@]/\.plugin\.bash/}
 }
 
-jabashit_describe_plugin(){
-    document "jabashit_describe_plugin" "Shows an entire plugin documentation" "" && return
-    bash -c "source $(source_jabashit); jabashit_describe_plugin_ $@;"
+yabatool_describe_plugin(){
+    document "yabatool_describe_plugin" "Shows an entire plugin documentation" "" && return
+    bash -c "source $(source_yabatool); yabatool_describe_plugin_ $@;"
 }
 
 function document_description() {
@@ -50,8 +50,8 @@ function document_description() {
     export document_description_enabled=0;
 }
 
-jabashit_describe_plugin_(){
-    unset docs; source $(source_jabashit); 
+yabatool_describe_plugin_(){
+    unset docs; source $(source_yabatool); 
     echo -e "Documentation for $1";
     document_description_enabled=1; load $1; 
     document_file $source_path/$1.plugin.bash
@@ -62,12 +62,12 @@ jabashit_describe_plugin_(){
 }
 
 load(){ # For backwards compatibility, undocumented (awful ;-) )  
-    jabashit_load $@;
+    yabatool_load $@;
 }
 
-function jabashit_api(){
-    document "jabashit_api" "Show all available functions and plugins for jabashit" "" && return 
-    for i in $(jabashit_plugins); do jabashit_describe_plugin $i; echo -e "\n"; done
+function yabatool_api(){
+    document "yabatool_api" "Show all available functions and plugins for yabatool" "" && return 
+    for i in $(yabatool_plugins); do yabatool_describe_plugin $i; echo -e "\n"; done
 }
 
 build_docs(){
@@ -101,8 +101,8 @@ split(){
     echo $1|tr $2 " ";
 }
 
-jabashit_load(){
-    document "jabashit_load" "Load a specific file or a jabashit plugin" "file|pluginname" && return
+yabatool_load(){
+    document "yabatool_load" "Load a specific file or a yabatool plugin" "file|pluginname" && return
     for i in "${@}"; do 
         [[ ! ${loaded[$i]} ]] && { 
             if [ -f $source_path/$i.plugin.bash ]; then _load $source_path/$i.plugin.bash; else _load $i; fi;

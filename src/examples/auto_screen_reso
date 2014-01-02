@@ -1,5 +1,5 @@
 #!/bin/bash
-source $(source_jabashit)
+source $(source_yabatool)
 load screen_display
 set_auto_X11_reso
 

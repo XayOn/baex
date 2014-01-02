@@ -13,16 +13,16 @@ options=( "cdable_vars" "checkwinsize" "histappend" "cdspell" )
 load_functions=( "set_opts" "use_lesspipe")
 
 # Load external files DO NOT TOUCH
-[[ -f ~/.jabashit/config ]] && . ~/.jabashit/config
-[[ -f ~/.jabashit/bash_aliases ]] && . ~/.jabashit/bash_aliases 
-[[ -f ~/.jabashit/bashrc_functions ]] && . ~/.jabashit/bashrc_functions
-[[ -f ~/.jabashit/bashrc_theme ]] && . ~/.jabashit/bashrc_theme || {
+[[ -f ~/.yabatool/config ]] && . ~/.yabatool/config
+[[ -f ~/.yabatool/bash_aliases ]] && . ~/.yabatool/bash_aliases 
+[[ -f ~/.yabatool/bashrc_functions ]] && . ~/.yabatool/bashrc_functions
+[[ -f ~/.yabatool/bashrc_theme ]] && . ~/.yabatool/bashrc_theme || {
     debchroot='${debian_chroot:+($debian_chroot)}'
     userhost='\[\033[01;32m\]\u@\h\[\033[00m\]:'
     workingdir='\[\033[01;34m\]\w\[\033[00m\]\$ '
 }
-[[ $jabashit_use_python ]] && { # Some nice and useful stuff for python programming.
-    . ~/.jabashit/bash_python
+[[ $yabatool_use_python ]] && { # Some nice and useful stuff for python programming.
+    . ~/.yabatool/bash_python
 }
 
 # Prompt DO NOT TOUCH, use .bashrc_theme to customize it

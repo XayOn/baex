@@ -19,20 +19,20 @@ cdtool [save|write_iso|write_dir|erase_dev] [device] [destination]
 Documentation for general
 color device_utils general git network screen_display time TUI
 
-jabashit_plugins 
-	Shows a list of available jabashit plugins
-jabashit_describe_plugin 
+yabatool_plugins 
+	Shows a list of available yabatool plugins
+yabatool_describe_plugin 
 	Shows an entire plugin documentation
 max_len_in_array array
 	Gets max lenght in array passed as argument
-jabashit_load file|pluginname
-	Load a specific file or a jabashit plugin
+yabatool_load file|pluginname
+	Load a specific file or a yabatool plugin
 _ TEXT
 	Calls gettext for translation
 split STRING SEPARATOR
 	Returns an array replacing \$2 in \$1
-jabashit_api 
-	Show all available functions and plugins for jabashit
+yabatool_api 
+	Show all available functions and plugins for yabatool
 get_center number [string]
 	Gets the center , or, if specified a variable, where to start printing it to make it centered
 addone VAR_TO_INCREASE

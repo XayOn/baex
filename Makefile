@@ -1,13 +1,13 @@
 PREFIX=/usr/local
 install:
-	@install src/source_jabashit $(PREFIX)/bin/
-	@install -d $(PREFIX)/share/jabashit
-	@install src/plugins/* $(PREFIX)/share/jabashit/
+	@install src/source_yabatool $(PREFIX)/bin/
+	@install -d $(PREFIX)/share/yabatool
+	@install src/plugins/* $(PREFIX)/share/yabatool/
 
 config:
-	@install -d /home/$(USER)/.jabashit
-	@cp -r src/confs/* /home/$(USER)/.jabashit/
-	@echo "Now just source /home/$(USER)/.jabashit/bashrc from your bashrc"
+	@install -d /home/$(USER)/.yabatool
+	@cp -r src/confs/* /home/$(USER)/.yabatool/
+	@echo "Now just source /home/$(USER)/.yabatool/bashrc from your bashrc"
 
 doc: install
 	@.mkdocs

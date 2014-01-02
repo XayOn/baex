@@ -1,7 +1,7 @@
 #!/bin/bash
-function _powerline() { export PS1="$(~/.jabashit/powerline/powerline-bash.py $?)"; }
+function _powerline() { export PS1="$(~/.yabatool/powerline/powerline-bash.py $?)"; }
 
-[[ $jabashit_use_powerline ]] && {
+[[ $yabatool_use_powerline ]] && {
    export PROMPT_COMMAND="_powerline"
 } || {
     debchroot='${debian_chroot:+($debian_chroot)}'

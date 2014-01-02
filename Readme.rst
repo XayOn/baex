@@ -3,10 +3,10 @@ About Jabashit
 Jabashit is a set of tools and functions designed to improve a terminal 
 user's working speed.
 
-To view jabashit documentation, simply execute
+To view yabatool documentation, simply execute
 
 ::
-    source $(source_jabashit); jabashit_api;
+    source $(source_yabatool); yabatool_api;
 
 Or, if you dare to see a probably outdated version, have a look at doc/API
 
@@ -27,9 +27,9 @@ Then source it in your bashrc:
 
 ::
 
-    source ~/.jabashit/bashrc
+    source ~/.yabatool/bashrc
 
-Don't forget to modify it to fit your needs, there is a ~/.jabashit/config 
+Don't forget to modify it to fit your needs, there is a ~/.yabatool/config 
 file for that purpose.
 Also, this enables by default "bash-powerline", wich is provided as 
 a submodule, as said before.
@@ -42,7 +42,7 @@ Now my favourite example, a menu creator:
 
 ::
 
-    source $(source_jabashit)
+    source $(source_yabatool)
     load screen_display TUI
     mkmenu -t "Menu title" -o "Option Foo bar baz"  -f "echo" -o "Option baz 
     stuff" -f "echo"
@@ -51,7 +51,7 @@ Now, we serve a directory:
 
 ::
 
-    source $(source_jabashit)
+    source $(source_yabatool)
     load network
     serve_directory
     # And to stop it...
@@ -62,7 +62,7 @@ All right, what about writing a DIRECTORY to a cd?
 
 ::
 
-    source $(source_jabashit)
+    source $(source_yabatool)
     load device_utils
     cdtool /dev/cdrom /home/foo/bar
     # And we delete a cdrw
@@ -76,7 +76,7 @@ One of my favourites, set all output devices connected to the reso xrandr
 says its its best.
 
 ::
-    source $(source_jabashit)
+    source $(source_yabatool)
     load screen_display
     set_auto_X11_reso
 
