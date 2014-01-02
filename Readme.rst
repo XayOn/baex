@@ -1,7 +1,6 @@
-About Jabashit
+About yabatool
 ------------
-Jabashit is a set of tools and functions designed to improve a terminal 
-user's working speed.
+yabatool (yet-another-bash-tool) is a set of tools and functions designed to make bash scripting faster and cleaner
 
 To view yabatool documentation, simply execute
 
