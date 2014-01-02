@@ -1,5 +1,6 @@
-About yabatool
-------------
+Yet Another Bash Tool
+------------------------
+
 yabatool (yet-another-bash-tool) is a set of tools and functions designed to make bash scripting faster and cleaner
 
 To view yabatool documentation, simply execute
