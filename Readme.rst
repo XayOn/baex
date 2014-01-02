@@ -6,6 +6,7 @@ user's working speed.
 To view yabatool documentation, simply execute
 
 ::
+
     source $(source_yabatool); yabatool_api;
 
 Or, if you dare to see a probably outdated version, have a look at doc/API
@@ -17,6 +18,7 @@ Bash powerline is a nice bash prompt by milkbikis, with the style of
 vim-powerline, written in python.
 
 ::
+
     git submodule init; git submodule update;
 
 ::
@@ -76,6 +78,7 @@ One of my favourites, set all output devices connected to the reso xrandr
 says its its best.
 
 ::
+
     source $(source_yabatool)
     load screen_display
     set_auto_X11_reso
