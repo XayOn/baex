@@ -22,7 +22,7 @@ document_files(){ for i in "$@"; do document_file $i; done; }
 document_file(){
     export helpbuilder=1;
     [[ $1 ]] && a=$1 || a=$0
-    for i in `command grep "document " $a|command grep -v 'document()'|grep -v document_file|command awk '{print $2}'|tr '"' ' '`; do 
+    for i in `command grep "document " $a|command grep -v 'document()'|grep -v document_file|command awk '{print $2}'|tr '"' ' '`; do
         $i;
     done
     export helpbuilder=0;
@@ -51,32 +51,32 @@ function document_description() {
 }
 
 yabatool_describe_plugin_(){
-    unset docs; source $(source_yabatool); 
+    unset docs; source $(source_yabatool);
     echo -e "Documentation for $1";
-    document_description_enabled=1; load $1; 
+    document_description_enabled=1; load $1;
     document_file $source_path/$1.plugin.bash
     echo
     for i in "${docs[@]}";
-        do echo -e $i; 
+        do echo -e $i;
     done
 }
 
-load(){ # For backwards compatibility, undocumented (awful ;-) )  
+load(){ # For backwards compatibility, undocumented (awful ;-) )
     yabatool_load $@;
 }
 
 function yabatool_api(){
-    document "yabatool_api" "Show all available functions and plugins for yabatool" "" && return 
+    document "yabatool_api" "Show all available functions and plugins for yabatool" "" && return
     for i in $(yabatool_plugins); do yabatool_describe_plugin $i; echo -e "\n"; done
 }
 
 build_docs(){
-    document_files ${available_plugins} 
+    document_files ${available_plugins}
     [[ ! $1 ]] && { command help; echo "---- Jabashit help ----"; for i in "${docs[@]}"; do echo -en "$i"|head -n1; done; } || echo -e ${docs[$1]}
 }
 addone(){
     document "addone" "Increases by one varname." "VAR_TO_INCREASE" && return
-    export $1=$(( $1 + 1 )); 
+    export $1=$(( $1 + 1 ));
 }
 
 _(){
@@ -85,28 +85,34 @@ _(){
 }
 
 max_len_in_array(){
-    document "max_len_in_array" "Gets max lenght in array passed as argument" "array" && return 
-    o=0; { for i in "${@}"; do (( ${#i} > $o )) && o=${#i}; done } &>/dev/null; 
+    document "max_len_in_array" "Gets max lenght in array passed as argument" "array" && return
+    o=0; { for i in "${@}"; do (( ${#i} > $o )) && o=${#i}; done } &>/dev/null;
     echo -n $o;
 }
 
 get_center(){
     document "get_center" "Gets the center , or, if specified a variable, where to start printing it to make it centered"\
         "number [string]" && return
-    [[ $2 ]] && echo $(( ( $1 - $2 ) / 2 )) || echo $(( $1 / 2 )); 
+    [[ $2 ]] && echo $(( ( $1 - $2 ) / 2 )) || echo $(( $1 / 2 ));
 }
 
-split(){ 
+split(){
     document "split" 'Returns an array replacing \$2 in \$1' "STRING SEPARATOR" && return
     echo $1|tr $2 " ";
 }
 
 yabatool_load(){
     document "yabatool_load" "Load a specific file or a yabatool plugin" "file|pluginname" && return
-    for i in "${@}"; do 
-        [[ ! ${loaded[$i]} ]] && { 
+    for i in "${@}"; do
+        [[ ! ${loaded[$i]} ]] && {
             if [ -f $source_path/$i.plugin.bash ]; then _load $source_path/$i.plugin.bash; else _load $i; fi;
-            } 
+            }
+    done;
+}
+yabatool_load_all(){
+    document "yabatool_load_all" "Load ALL jabatool plugins" "" && return
+    for i in $(yabatool_plugins); do
+        if [ -f $source_path/$i.plugin.bash ]; then _load $source_path/$i.plugin.bash; else _load $i; fi;
     done;
 }
 _load(){ source $1 && loaded[$1]=1 || load_failed "$@";  }
