@@ -3,9 +3,6 @@ declare -A colors highlights theme
 theme=([menu_number]=231 [normal]=90 [separator]='-' [menu_separator]="|"  [menu_separator_color]=40 [menu_edge]="+" )
 highlights=([standout]=0 [underline]=1 [reverse]=2 [blink]=3 [dim]=4 [bold]=5 [invis]=6 [protect]=7 [altcharset]=8 )
 colors=( [none]=0 [black]=1 [blue]=2 [green]=3 [cyan]=4 [magenta]=5 [yellow]=6 [white]=7 )
-#!/bin/bash
-# General utils
-
 doc(){
     # This enables python-style docstrings for functions
     [[ $PRINT_DOCS == 1 ]] && {
@@ -55,7 +52,8 @@ doc <<EOD
     -----
 
     Translate a string
-    This is an alias of gettext "$@"
+
+    This is an alias of gettext "\$@"
 
 EOD
 
@@ -229,6 +227,7 @@ doc <<EOD
     -----------
 
     Center text.
+
     :param text: Just like echo.
 
 EOD
@@ -345,6 +344,7 @@ doc <<EOD
     ----
 
     Simply wraps an string with a start and an end.
+
     :param start: start string
     :param content: content string
     :param end: end string
@@ -464,8 +464,6 @@ eval $endoc
 
     read -p "Enter option: " RESULT
 }
-#!/bin/bash
-
 get_color(){
 doc <<EOD
 
@@ -535,6 +533,7 @@ doc <<EOD
     --------
 
     Colorizes a phrase.
+
     :param fg: Foreground color
     :param bg: Background color
     :param phrase: what to apply color on. This takes ${@} - $1 - $2 (2:)

@@ -3,7 +3,8 @@
 -----
 
 Translate a string
-This is an alias of gettext ""
+
+This is an alias of gettext "$@"
 
 
 
@@ -67,6 +68,7 @@ colorize
 --------
 
 Colorizes a phrase.
+
 :param fg: Foreground color
 :param bg: Background color
 :param phrase: what to apply color on. This takes  -  -  (2:)
@@ -103,6 +105,7 @@ echo_center
 -----------
 
 Center text.
+
 :param text: Just like echo.
 
 
@@ -309,6 +312,7 @@ wrap
 ----
 
 Simply wraps an string with a start and an end.
+
 :param start: start string
 :param content: content string
 :param end: end string
