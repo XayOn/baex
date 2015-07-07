@@ -10,9 +10,8 @@ extensive use of system()/interact with a lot of unix-like tools.
 API
 ---
 
-Currently the following options are implemented:
+Have a look at the `API documentation <./docs/api.rst>`_
 
-.. include:: ./api.rst
 
 Examples
 --------
@@ -21,6 +20,7 @@ The API documentation is really complete. But I'm providing a clear example of
 use here, a tool to operate on cd/dvd stuff.
 
 ::
+
     source build/baex.bash
 
     declare -a operations
@@ -42,5 +42,3 @@ operations on cd/dvd drives.
 Bit outdated, but hey... good things never get old.
 
 .. image:: http://media4.giphy.com/media/p6VjEoV8i3HRS/200w.gif
-
-
