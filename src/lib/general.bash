@@ -1,6 +1,3 @@
-#!/bin/bash
-# General utils
-
 doc(){
     # This enables python-style docstrings for functions
     [[ $PRINT_DOCS == 1 ]] && {
@@ -50,7 +47,8 @@ doc <<EOD
     -----
 
     Translate a string
-    This is an alias of gettext "$@"
+
+    This is an alias of gettext "\$@"
 
 EOD
 

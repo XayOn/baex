@@ -61,6 +61,7 @@ doc <<EOD
     -----------
 
     Center text.
+
     :param text: Just like echo.
 
 EOD
@@ -177,6 +178,7 @@ doc <<EOD
     ----
 
     Simply wraps an string with a start and an end.
+
     :param start: start string
     :param content: content string
     :param end: end string

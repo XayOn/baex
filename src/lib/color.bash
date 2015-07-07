@@ -1,5 +1,3 @@
-#!/bin/bash
-
 get_color(){
 doc <<EOD
 
@@ -69,6 +67,7 @@ doc <<EOD
     --------
 
     Colorizes a phrase.
+
     :param fg: Foreground color
     :param bg: Background color
     :param phrase: what to apply color on. This takes ${@} - $1 - $2 (2:)
