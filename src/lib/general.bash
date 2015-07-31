@@ -57,3 +57,24 @@ eval $endoc
     gettext "$@"
 
 }
+
+unique_process(){
+doc <<EOD
+
+    unique_process
+    --------------
+
+    Handles a pid file in /tmp with the process' name,
+    killing the proc that's there, and writing its own
+    pid to the pid file.
+
+    This way we can safely launch a program twice, and
+    not have them be at the same time.
+
+EOD
+eval $endoc
+
+    { kill -9 $(cat /tmp/${0}.pid); } &>/dev/null
+    echo $$ > /tmp/${0}.pid
+
+}

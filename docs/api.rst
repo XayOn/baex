@@ -308,6 +308,18 @@ Does not print text options nor do anything to choose.
 
 
 
+unique_process
+--------------
+
+Handles a pid file in /tmp with the process' name,
+killing the proc that's there, and writing its own
+pid to the pid file.
+
+This way we can safely launch a program twice, and
+not have them be at the same time.
+
+
+
 wrap
 ----
 
